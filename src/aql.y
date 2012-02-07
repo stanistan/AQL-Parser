@@ -145,8 +145,7 @@ table_definitions
 	: table_definition { $$ = array($1); }
 	| table_definition table_definitions 
 		{ 
-			$tmp = $2;
-			$tmp[] = $1;
+			$tmp = array_merge(array($1), $2);
 			$$ = $tmp;
 		}
 	;

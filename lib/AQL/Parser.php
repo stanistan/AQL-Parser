@@ -25,8 +25,7 @@ class Parser
         $__0__ = TRUE;
         if (($__1__ = $this->_table_definition_()) !== NULL) {
             if (($__2__ = $this->_table_definitions_()) !== NULL) {
-                $tmp = $__2__;
-                $tmp[] = $__1__;
+                $tmp = array_merge(array($__1__), $__2__);
                 $__0__ = $tmp;
             }
             else {
