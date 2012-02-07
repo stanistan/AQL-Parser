@@ -47,7 +47,7 @@ Using [this](https://github.com/jakubkulhan/pacc/) as a Parser Generator to repl
 In git directory, run:
 
 ```sh
-./pacc -i src/aql.y  -o lib/AQL/Parser.php -f
+$ ./pacc -i src/aql.y  -o lib/AQL/Parser.php -f
 ```
 
 #### To Do:
