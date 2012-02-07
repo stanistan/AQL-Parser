@@ -41,7 +41,7 @@ namespace AQL;
         KEYWORD = 4;
 
     const
-        SPECIALREGEX = '#^(\\{|,|\\}|\[|\\|\]|(|)|=|.])#',
+        SPECIALREGEX = '#^(\{|,|\}|\[|\\|\]|(|)|=|.\])#',
         KEYWORDREGEX = '#^(true|false|null|on|as|order by|where)#i',
         STRINGREGEX = '#^([a-zA-Z_]+)#',
         NUMBERREGEX = '#^(-?(0|[1-9][0-9]*)(\\.[0-9]+([eE][+-]?[0-9]+)?)?)#';
