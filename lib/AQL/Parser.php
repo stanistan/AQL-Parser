@@ -75,6 +75,23 @@ class Parser
         return $__0__;
     }
 
+    private function _table_contents_() {
+        $__0__ = TRUE;
+        if (($__1__ = $this->_table_fields_()) !== NULL) {
+            if (($__2__ = $this->_table_definitions_()) !== NULL) {
+                $__0__ = array($__1__, new \AQL\Query($__2__));
+            }
+            else {
+                $__0__ = $__1__;
+            }
+
+        }
+        else {
+            $__0__ = NULL;
+        }
+        return $__0__;
+    }
+
     private function _table_declaration_() {
         $__0__ = TRUE;
         if (($__1__ = $this->_table_name_()) !== NULL) {
@@ -157,7 +174,7 @@ class Parser
         return $__0__;
     }
 
-    private function _table_contents_() {
+    private function _table_fields_() {
         $__0__ = TRUE;
         if (($__1__ = $this->_table_contents_entry_()) !== NULL) {
             if ($this->_currentTokenLexeme() === ',') {
@@ -236,6 +253,36 @@ class Parser
                     $__3__ = $this->_currentToken();
                     $this->_nextToken();
                     $__0__ = array('object_name' => $__2__->lexeme);
+                }
+                else if ($this->_currentTokenLexeme() === '(') {
+                    $__3__ = $this->_currentToken();
+                    $this->_nextToken();
+                    if (($__4__ = $this->_field_name_()) !== NULL) {
+                        if ($this->_currentTokenLexeme() === ')') {
+                            $__5__ = $this->_currentToken();
+                            $this->_nextToken();
+                            if ($this->_currentTokenLexeme() === ']') {
+                                $__6__ = $this->_currentToken();
+                                $this->_nextToken();
+                                $__0__ = array(
+                                'object_name' => $__2__->lexeme,
+                                'constructor' => $__4__
+                                );
+                            }
+                            else {
+                                $__0__ = NULL;
+                            }
+
+                        }
+                        else {
+                            $__0__ = NULL;
+                        }
+
+                    }
+                    else {
+                        $__0__ = NULL;
+                    }
+
                 }
                 else {
                     $__0__ = NULL;
@@ -383,7 +430,7 @@ class Parser
         KEYWORD = 4;
 
     const
-        SPECIALREGEX = '#^(\\{|,|\\}|\[|\\|\]|(|)|=|.])#',
+        SPECIALREGEX = '#^([\[\]{},:.()])#',
         KEYWORDREGEX = '#^(true|false|null|on|as|order by|where)#i',
         STRINGREGEX = '#^([a-zA-Z_]+)#',
         NUMBERREGEX = '#^(-?(0|[1-9][0-9]*)(\\.[0-9]+([eE][+-]?[0-9]+)?)?)#';

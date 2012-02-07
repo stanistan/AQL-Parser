@@ -41,7 +41,7 @@ namespace AQL;
         KEYWORD = 4;
 
     const
-        SPECIALREGEX = '#^(\{|,|\}|\[|\\|\]|(|)|=|.\])#',
+        SPECIALREGEX = '#^([\[\]{},:.()])#',
         KEYWORDREGEX = '#^(true|false|null|on|as|order by|where)#i',
         STRINGREGEX = '#^([a-zA-Z_]+)#',
         NUMBERREGEX = '#^(-?(0|[1-9][0-9]*)(\\.[0-9]+([eE][+-]?[0-9]+)?)?)#';
@@ -160,6 +160,11 @@ table_definition
 		}
 	;
 
+table_contents
+	: table_fields { $$ = $1; }
+	| table_fields table_definitions { $$ = array($1, new \AQL\Query($2)); }
+	;
+
 table_declaration
 	: table_name	{ 	$$ = $1; 	}
 	| table_name 'on' table_join_defs 
@@ -182,7 +187,7 @@ table_join_defs
 		}
 	;
 
-table_contents 
+table_fields 
 	: table_contents_entry { $$ = $1; }
 	| table_contents_entry ',' table_contents { $$ = array($1, $3); }
 	;
@@ -203,6 +208,13 @@ table_contents_entry
 
 object_definition 
 	: '[' STRING ']' { $$ = array('object_name' => $2->lexeme); }
+	| '[' STRING '(' field_name ')' ']' 
+		{ 
+			$$ = array(
+				'object_name' => $2->lexeme,
+				'constructor' => $4
+			);
+		}
 	;
 
 field_name

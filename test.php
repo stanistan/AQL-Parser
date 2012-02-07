@@ -11,7 +11,10 @@ $aql = 	"
 	market { name }
 	ct_contract as contract { contract_name as test }
 	a_third on ct_contract and market { third_field }
-	another as analias { some_field }
+	another as analias { 
+		[some_field(a_third.abc)] as object_alias
+		sub { a }
+	}
 ";
 // try {
 	$re = \AQL\Parser::parse($aql);	
