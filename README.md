@@ -18,25 +18,6 @@ or, with a variance of a restraint that will be configurable.
 SELECT table.field1, table.field2, table.field3 FROM table WHERE table.active = 1;
 ```
 
-And also use it to generate data models.
-
-```php
-<?
-
-// not yet implemenented
-
-class Table extends \AQL\Model { 
-    // this object would automatically have a restriction
-    // on what properties that it can have 
-    // as  defined by its AQL statement
-    
-    public $required = array(
-        'field1' => 'Some Field'
-    );
-    
-}
-
-```
 
 #### Credit
 
